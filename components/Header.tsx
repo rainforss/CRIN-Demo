@@ -30,9 +30,16 @@ const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
         px={32}
         py={4}
       >
-        {!isLoading && !user && (
+        {!user && (
           <>
-            <Button variant="solid" bgColor="black" color="white" px={8}>
+            <Button
+              variant="solid"
+              bgColor="black"
+              color="white"
+              px={8}
+              isLoading={isLoading}
+              disabled={isLoading}
+            >
               Login
             </Button>
           </>

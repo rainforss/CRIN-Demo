@@ -16,6 +16,7 @@ import {
 } from "../../@types/generated/contentful";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 import {
   getPublicationByTypeAndSlug,
   getWebPageByWebsiteIdAndPageName,
@@ -38,7 +39,7 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
   headerNav,
   footerNav,
 }) => {
-  console.log(publication.fields.crinDocuments);
+  const { user, isLoading, isError } = useCurrentUser();
   const options: Options = {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
@@ -119,17 +120,23 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Box
-                    as="a"
-                    target="_blank"
-                    href={
-                      `https:${cd.fields.file?.fields.file.url}` ||
-                      cd.fields.externalResourceUrl ||
-                      "#"
-                    }
-                  >
-                    {cd.fields.name} <ExternalLinkIcon />
-                  </Box>
+                  {cd.fields.restricted && !user ? (
+                    <Box as="a">
+                      {cd.fields.name} <ExternalLinkIcon />
+                    </Box>
+                  ) : (
+                    <Box
+                      as="a"
+                      target="_blank"
+                      href={
+                        `https:${cd.fields.file?.fields.file.url}` ||
+                        cd.fields.externalResourceUrl ||
+                        "#"
+                      }
+                    >
+                      {cd.fields.name} <ExternalLinkIcon />
+                    </Box>
+                  )}
                   {cd.fields.restricted ? (
                     <Badge colorScheme="orange">Member Only</Badge>
                   ) : null}
@@ -170,17 +177,23 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Box
-                    as="a"
-                    target="_blank"
-                    href={
-                      `https:${cd.fields.file?.fields.file.url}` ||
-                      cd.fields.externalResourceUrl ||
-                      "#"
-                    }
-                  >
-                    {cd.fields.name} <ExternalLinkIcon />
-                  </Box>
+                  {cd.fields.restricted && !user ? (
+                    <Box as="a">
+                      {cd.fields.name} <ExternalLinkIcon />
+                    </Box>
+                  ) : (
+                    <Box
+                      as="a"
+                      target="_blank"
+                      href={
+                        `https:${cd.fields.file?.fields.file.url}` ||
+                        cd.fields.externalResourceUrl ||
+                        "#"
+                      }
+                    >
+                      {cd.fields.name} <ExternalLinkIcon />
+                    </Box>
+                  )}
                   {cd.fields.restricted ? (
                     <Badge colorScheme="orange">Member Only</Badge>
                   ) : null}
@@ -221,17 +234,23 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <Box
-                    as="a"
-                    target="_blank"
-                    href={
-                      `https:${cd.fields.file?.fields.file.url}` ||
-                      cd.fields.externalResourceUrl ||
-                      "#"
-                    }
-                  >
-                    {cd.fields.name} <ExternalLinkIcon />
-                  </Box>
+                  {cd.fields.restricted && !user ? (
+                    <Box as="a">
+                      {cd.fields.name} <ExternalLinkIcon />
+                    </Box>
+                  ) : (
+                    <Box
+                      as="a"
+                      target="_blank"
+                      href={
+                        `https:${cd.fields.file?.fields.file.url}` ||
+                        cd.fields.externalResourceUrl ||
+                        "#"
+                      }
+                    >
+                      {cd.fields.name} <ExternalLinkIcon />
+                    </Box>
+                  )}
                   {cd.fields.restricted ? (
                     <Badge colorScheme="orange">Member Only</Badge>
                   ) : null}
