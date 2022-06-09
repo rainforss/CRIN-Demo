@@ -1,6 +1,9 @@
 import axios from "axios";
 import { LoginValues } from "../pages/login";
 import { RegistrationValues } from "../pages/register";
+import { RequestValues } from "../pages/request";
+
+export const submitRequest = async (request: RequestValues) => {};
 
 export const submitRegistration = async (info: RegistrationValues) => {
   try {

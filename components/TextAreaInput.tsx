@@ -3,26 +3,22 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
+  Textarea,
 } from "@chakra-ui/react";
 import { useField } from "formik";
 import * as React from "react";
 
-interface ITextInputProps extends ChakraProps {
-  type: React.HTMLInputTypeAttribute;
+interface ITextAreaInputProps extends ChakraProps {
   id: string;
   name: string;
   label: string;
   isRequired?: boolean;
-  autoComplete?: string;
 }
 
-const TextInput: React.FunctionComponent<ITextInputProps> = ({
-  type,
+const TextAreaInput: React.FunctionComponent<ITextAreaInputProps> = ({
   id,
   name,
   label,
-  autoComplete,
   isRequired,
   ...chakraProps
 }) => {
@@ -34,16 +30,17 @@ const TextInput: React.FunctionComponent<ITextInputProps> = ({
       {...chakraProps}
     >
       <FormLabel htmlFor={id}>{label}</FormLabel>
-      <Input
+      <Textarea
         {...field}
         id={id}
         name={name}
-        type={type}
-        autoComplete={autoComplete || "off"}
+        resize="vertical"
+        rows={5}
+        autoComplete="off"
       />
       {!!meta.error && <FormErrorMessage>{meta.error}</FormErrorMessage>}
     </FormControl>
   );
 };
 
-export default TextInput;
+export default TextAreaInput;

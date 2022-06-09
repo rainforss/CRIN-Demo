@@ -1,3 +1,5 @@
+import { Entity } from "dataverse-webapi";
+
 export type DynamicsMatch = {
   msmedia_name: string;
   msmedia_mediaeventid: string;
@@ -79,3 +81,11 @@ export type DynamicsSportsTeam = {
     "bsi_teamrole@OData.Community.Display.V1.FormattedValue": string;
   }>;
 };
+
+export interface DynamicsRequest extends Entity {
+  bsi_title: string;
+  bsi_requestdescription: string;
+  "bsi_SubmittedBy@odata.bind": string;
+  bsi_startdate: Date;
+  bsi_enddate: Date;
+}

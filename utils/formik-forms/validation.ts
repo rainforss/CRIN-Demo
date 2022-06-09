@@ -1,5 +1,18 @@
 import * as Yup from "yup";
 
+export const requestSchema = Yup.object().shape({
+  title: Yup.string()
+    .trim()
+    .min(10, "Please enter a descriptive title")
+    .required("Title is required"),
+  requestDescription: Yup.string()
+    .trim()
+    .min(10, "Please enter the description of your request")
+    .required("Description is required"),
+  startDate: Yup.date().required("Please enter a start date"),
+  endDate: Yup.date().required("Please enter an end date"),
+});
+
 export const contactFormSubmissionSchema = Yup.object().shape({
   bsi_firstname: Yup.string()
     .trim()
