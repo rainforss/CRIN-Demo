@@ -78,8 +78,8 @@ async function requestRoute(req: NextApiRequest, res: NextApiResponse) {
         ).createRequest({
           bsi_title: fields.title as string,
           bsi_requestdescription: fields.requestDescription as string,
-          bsi_startdate: new Date(),
-          bsi_enddate: new Date(),
+          bsi_startdate: new Date(fields.startDate),
+          bsi_enddate: new Date(fields.endDate),
           "bsi_SubmittedBy@odata.bind": `/contacts(${req!.session!.user!.id!})`,
         });
 

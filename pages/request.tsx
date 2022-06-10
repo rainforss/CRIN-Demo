@@ -4,6 +4,7 @@ import { Formik, FormikProps, Form } from "formik";
 import router from "next/router";
 import * as React from "react";
 import { IWebPage, INavigation } from "../@types/generated/contentful";
+import DateInput from "../components/DateInput";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextAreaInput from "../components/TextAreaInput";
@@ -139,6 +140,22 @@ const Request: React.FunctionComponent<IRequestProps> = ({
                       props.setFieldValue("file", event.currentTarget.files[0]);
                     }
                   }}
+                />
+                <DateInput
+                  id="startDate"
+                  name="startDate"
+                  label="Start Date"
+                  w="100%"
+                  p="1rem"
+                  mt={4}
+                />
+                <DateInput
+                  id="endDate"
+                  name="endDate"
+                  label="End Date"
+                  w="100%"
+                  p="1rem"
+                  mt={4}
                 />
                 <Button
                   type="submit"

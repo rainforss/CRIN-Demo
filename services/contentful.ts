@@ -128,7 +128,6 @@ export const getWebPageByWebsiteIdAndPageName = async (
       : undefined;
     const headerNav: INavigation = website.fields.headerNavigation!;
     const footerNav: INavigation = website.fields.footerNavigation!;
-    console.log(pageName, webPage, website);
     return {
       siteName: website.fields.name,
       webPage,
