@@ -88,15 +88,33 @@ const Request: React.FunctionComponent<IRequestProps> = ({
             //     isClosable: true,
             //   });
             // }
-            let formData = new FormData();
-            formData.append("test", "ape");
-            for (let value in values) {
-              formData.append(value, (values as any)[value]);
+            try {
+              let formData = new FormData();
+              formData.append("test", "ape");
+              for (let value in values) {
+                formData.append(value, (values as any)[value]);
+              }
+              const result = await axios.post("/api/request", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+              });
+              actions.resetForm();
+              toast({
+                title: "Request submitted.",
+                description: `We've received your request ${result.data.bsi_title}. You will receive further emails about processing of your request.`,
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+                onCloseComplete: () => router.push("/"),
+              });
+            } catch (error: any) {
+              return toast({
+                title: error.response.data.error.name,
+                description: error.response.data.error.message,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+              });
             }
-            const result = await axios.post("/api/request", formData, {
-              headers: { "Content-Type": "multipart/form-data" },
-            });
-            console.log(result.data);
           }}
         >
           {(props) => {

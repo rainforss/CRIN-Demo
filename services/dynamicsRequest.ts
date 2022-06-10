@@ -6,7 +6,7 @@ export const dynamicsRequest = (accessToken: string) => {
     createRequest: async (request: DynamicsRequest) => {
       try {
         const result = await axios.post(
-          `${process.env.CLIENT_URL}/api/data/v9.1/bsi_requests?$select=bsi_name,bsi_requestid`,
+          `${process.env.CLIENT_URL}/api/data/v9.1/bsi_requests?$select=bsi_name,bsi_requestid,bsi_title`,
           request,
           {
             headers: {
