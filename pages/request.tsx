@@ -68,26 +68,6 @@ const Request: React.FunctionComponent<IRequestProps> = ({
             file: null,
           }}
           onSubmit={async (values, actions) => {
-            // try {
-            //   const result = await submitRegistration(values);
-            //   actions.setSubmitting(false);
-            //   toast({
-            //     title: "User account created.",
-            //     description: `We've created your account ${result.data.username} for you. Now redirecting you to home page.`,
-            //     status: "success",
-            //     duration: 3000,
-            //     isClosable: true,
-            //     onCloseComplete: () => router.push("/"),
-            //   });
-            // } catch (error: any) {
-            //   return toast({
-            //     title: error.response.data.error.name,
-            //     description: error.response.data.error.message,
-            //     status: "error",
-            //     duration: 9000,
-            //     isClosable: true,
-            //   });
-            // }
             try {
               let formData = new FormData();
               formData.append("test", "ape");
