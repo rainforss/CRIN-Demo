@@ -32,7 +32,7 @@ const Home: NextPage<IHomeProps> = (props) => {
           title: props.webPage?.fields.seoTitle,
           description: props.webPage?.fields.seoDescription,
           site_name: props.siteName,
-          images: props.webPage?.fields.seoPageSnapshot.map((s) => ({
+          images: props.webPage?.fields.seoPageSnapshot?.map((s) => ({
             url: s.fields.file.url,
             width: s.fields.file.details.image?.width,
             height: s.fields.file.details.image?.height,
@@ -52,13 +52,7 @@ const Home: NextPage<IHomeProps> = (props) => {
             //     key: s.bsi_pagesectionid,
             //   });
             const Section = sectionConfig[s.fields.designedSection];
-            return (
-              <Section
-                key={s.sys.id}
-                pageSection={s}
-                publications={props.publications}
-              />
-            );
+            return <Section key={s.sys.id} pageSection={s} />;
           })}
         </div>
       )}

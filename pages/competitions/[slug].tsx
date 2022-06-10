@@ -4,7 +4,7 @@ import {
   Options,
 } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
-import { GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext, GetStaticPathsContext } from "next";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
@@ -17,6 +17,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import {
   getPublicationByTypeAndSlug,
+  getPublicationsByType,
   getWebPageByWebsiteIdAndPageName,
 } from "../../services/contentful";
 
@@ -99,9 +100,17 @@ const CompetitionSlug: React.FunctionComponent<ICompetitionSlugProps> = ({
 
 export default CompetitionSlug;
 
-export const getServerSideProps = async ({
-  params,
-}: GetServerSidePropsContext) => {
+export const getStaticPaths = async ({}: GetStaticPathsContext) => {
+  const paths: any[] = [];
+  const { publications } = await getPublicationsByType("Competitions");
+  publications.forEach((p) => paths.push({ params: { slug: p.fields.slug } }));
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params }: GetServerSidePropsContext) => {
   const { slug } = params as IParams;
   const { publication } = await getPublicationByTypeAndSlug(
     "Competitions",

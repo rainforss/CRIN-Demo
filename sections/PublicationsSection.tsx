@@ -4,14 +4,13 @@ import { IPageSection, IPublications } from "../@types/generated/contentful";
 import PublicationCard from "../components/PublicationCard";
 
 interface IPublicationsSectionProps {
-  publications?: IPublications[];
   pageSection: IPageSection;
 }
 
 const PublicationsSection: React.FunctionComponent<
   IPublicationsSectionProps
-> = ({ publications, pageSection }) => {
-  if (!publications) {
+> = ({ pageSection }) => {
+  if (!pageSection.fields.publications) {
     return null;
   }
   return (
@@ -33,7 +32,7 @@ const PublicationsSection: React.FunctionComponent<
         w="70%"
         style={{ gap: "4rem" }}
       >
-        {publications.map((m) => (
+        {pageSection.fields.publications.map((m) => (
           <PublicationCard publication={m} key={m.sys.id} />
         ))}
       </Box>

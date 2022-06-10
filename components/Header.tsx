@@ -112,17 +112,17 @@ const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
                     </MenuButton>
                     <MenuList>
                       {i.fields.subItems.map((si) => (
-                        <MenuItem
+                        <Link
                           key={si.sys.id}
-                          as="a"
                           href={
                             si.fields.relativeUrl ||
                             si.fields.absoluteUrl ||
                             "#"
                           }
+                          passHref
                         >
-                          {si.fields.linkText}
-                        </MenuItem>
+                          <MenuItem as="a">{si.fields.linkText}</MenuItem>
+                        </Link>
                       ))}
                     </MenuList>
                   </Menu>

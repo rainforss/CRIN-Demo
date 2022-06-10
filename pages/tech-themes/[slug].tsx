@@ -21,6 +21,7 @@ import {
   getPublicationByTypeAndSlug,
   getWebPageByWebsiteIdAndPageName,
 } from "../../services/contentful";
+import { richTextParserOption } from "../../utils/contentful/richTextParser";
 
 interface ITechThemeSlugProps {
   publication: IPublications;
@@ -40,23 +41,7 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
   footerNav,
 }) => {
   const { user, isLoading, isError } = useCurrentUser();
-  const options: Options = {
-    renderNode: {
-      [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        const { title, file } = node.data.target.fields;
-        return (
-          <Box w="500px" mx="auto" my={16}>
-            <Image
-              src={`https:${file.url}`}
-              alt={title}
-              width={file.details.image.width}
-              height={file.details.image.height}
-            />
-          </Box>
-        );
-      },
-    },
-  };
+
   return (
     <>
       <Header headerNav={headerNav} />
@@ -86,7 +71,10 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
           </Box>
         </Box>
         <Box w="60%">
-          {documentToReactComponents(publication.fields.content!, options)}
+          {documentToReactComponents(
+            publication.fields.content!,
+            richTextParserOption
+          )}
         </Box>
       </Box>
       {publication.fields.crinDocuments && (
@@ -278,10 +266,33 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
             </Box>
           </Box>
           <Box w="60%">
-            <Box as="p" fontSize="1.2rem" fontWeight="bold">
-              {publication.fields.personnel.fields.fullName},{" "}
-              {publication.fields.personnel.fields.email}
-            </Box>
+            <VStack
+              divider={<StackDivider borderColor="gray.200" />}
+              spacing={4}
+              align="stretch"
+            >
+              {publication.fields.personnel &&
+                publication.fields.personnel.map((p) => (
+                  <Box
+                    key={p.sys.id}
+                    fontSize="1.2rem"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box
+                      as="a"
+                      target="_blank"
+                      href={p.fields.personalLink || "#"}
+                    >
+                      {p.fields.fullName}
+                    </Box>
+                    <Box as="a" href={`mailto:${p.fields.email}`}>
+                      {p.fields.email}
+                    </Box>
+                  </Box>
+                ))}
+            </VStack>
           </Box>
         </Box>
       )}

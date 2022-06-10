@@ -79,7 +79,7 @@ export const getPublicationByTypeAndSlug = async (
 
 export const getPublicationsByType = async (type: string) => {
   try {
-    const publications: IPublications = (
+    const publications: IPublications[] = (
       await client.getEntries({
         content_type: "publications",
         "fields.type": type,
@@ -92,11 +92,12 @@ export const getPublicationsByType = async (type: string) => {
   }
 };
 
-export const getAllWebPages = async () => {
+export const getAllStaticWebPages = async () => {
   try {
     const webPages: IWebPage[] = (
       await client.getEntries({
         content_type: "webPage",
+        "fields.pageType": "Static Page",
         include: 3,
       })
     ).items;
@@ -127,6 +128,7 @@ export const getWebPageByWebsiteIdAndPageName = async (
       : undefined;
     const headerNav: INavigation = website.fields.headerNavigation!;
     const footerNav: INavigation = website.fields.footerNavigation!;
+    console.log(pageName, webPage, website);
     return {
       siteName: website.fields.name,
       webPage,

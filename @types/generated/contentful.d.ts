@@ -285,9 +285,6 @@ export interface INavigationMenuSubItem
 }
 
 export interface IPageSectionFields {
-  /** Section ID */
-  sectionId?: string | undefined;
-
   /** Overline */
   overline?: string | undefined;
 
@@ -306,6 +303,9 @@ export interface IPageSectionFields {
   /** Main Heading Bg Color */
   mainHeadingBgColor?: string | undefined;
 
+  /** Section ID */
+  sectionId?: string | undefined;
+
   /** Sub Heading */
   subHeading?: string | undefined;
 
@@ -318,6 +318,9 @@ export interface IPageSectionFields {
   /** Description Text Color */
   descriptionTextColor?: string | undefined;
 
+  /** Rich Text Body */
+  richTextBody?: Document | undefined;
+
   /** Background Color */
   backgroundColor?: string | undefined;
 
@@ -328,10 +331,21 @@ export interface IPageSectionFields {
   attachedComponents?: IAttachedComponent[] | undefined;
 
   /** Designed Section */
-  designedSection: "HeroSection" | "CarouselSection" | "PublicationsSection";
+  designedSection:
+    | "HeroSection"
+    | "CarouselSection"
+    | "PublicationsSection"
+    | "RichTextSection"
+    | "SecondaryHeroSection";
 
   /** Buttons */
   buttons?: IButton[] | undefined;
+
+  /** Publications */
+  publications?: IPublications[] | undefined;
+
+  /** Attachments */
+  attachments?: IAttachment[] | undefined;
 }
 
 export interface IPageSection extends Entry<IPageSectionFields> {
@@ -383,9 +397,6 @@ export interface IPublicationsFields {
   /** Name */
   name: string;
 
-  /** Slug */
-  slug: string;
-
   /** Type */
   type:
     | "News"
@@ -394,6 +405,9 @@ export interface IPublicationsFields {
     | "Stories"
     | "Blogs"
     | "Competitions";
+
+  /** Slug */
+  slug: string;
 
   /** Event Date */
   eventDate?: string | undefined;
@@ -413,14 +427,8 @@ export interface IPublicationsFields {
   /** CRIN Webinars and Presentations */
   crinWebinarsAndPresentations?: IAttachment[] | undefined;
 
-  /** Tools */
-  tools?: IAttachment[] | undefined;
-
-  /** Resources */
-  resources?: IResource[] | undefined;
-
   /** Personnel */
-  personnel?: IPersonnel | undefined;
+  personnel?: IPersonnel[] | undefined;
 }
 
 export interface IPublications extends Entry<IPublicationsFields> {
@@ -433,31 +441,6 @@ export interface IPublications extends Entry<IPublicationsFields> {
     contentType: {
       sys: {
         id: "publications";
-        linkType: "ContentType";
-        type: "Link";
-      };
-    };
-  };
-}
-
-export interface IResourceFields {
-  /** Name */
-  name: string;
-
-  /** Files */
-  files?: IAttachment[] | undefined;
-}
-
-export interface IResource extends Entry<IResourceFields> {
-  sys: {
-    id: string;
-    type: string;
-    createdAt: string;
-    updatedAt: string;
-    locale: string;
-    contentType: {
-      sys: {
-        id: "resource";
         linkType: "ContentType";
         type: "Link";
       };
@@ -482,16 +465,25 @@ export interface IWebPageFields {
   slug: string;
 
   /** SEO Title */
-  seoTitle: string;
+  seoTitle?: string | undefined;
 
   /** SEO Description */
-  seoDescription: string;
+  seoDescription?: string | undefined;
 
   /** SEO Page Snapshot */
-  seoPageSnapshot: Asset[];
+  seoPageSnapshot?: Asset[] | undefined;
 
   /** SEO Absolute URL */
-  seoAbsoluteUrl: string;
+  seoAbsoluteUrl?: string | undefined;
+
+  /** Page Type */
+  pageType: "Static Page" | "Template Page";
+
+  /** Restricted */
+  restricted: boolean;
+
+  /** Sub Pages */
+  subPages?: IWebPage[] | undefined;
 }
 
 export interface IWebPage extends Entry<IWebPageFields> {
@@ -556,7 +548,6 @@ export type CONTENT_TYPE =
   | "pageSection"
   | "personnel"
   | "publications"
-  | "resource"
   | "webPage"
   | "website";
 

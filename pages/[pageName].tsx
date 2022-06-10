@@ -3,13 +3,14 @@ import type {
   GetStaticPropsContext,
   NextPage,
 } from "next";
+import { NextSeo } from "next-seo";
 import { ParsedUrlQuery } from "querystring";
 import { INavigation, IWebPage } from "../@types/generated/contentful";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { sectionConfig } from "../sections/sectionConfig";
 import {
-  getAllWebPages,
+  getAllStaticWebPages,
   getWebPageByWebsiteIdAndPageName,
 } from "../services/contentful";
 
@@ -17,6 +18,7 @@ interface IPageProps {
   webPage: IWebPage | undefined;
   headerNav: INavigation;
   footerNav: INavigation;
+  siteName: string;
 }
 
 interface IParams extends ParsedUrlQuery {
@@ -26,6 +28,23 @@ interface IParams extends ParsedUrlQuery {
 const Page: NextPage<IPageProps> = (props) => {
   return (
     <>
+      <NextSeo
+        title={props.webPage?.fields.seoTitle}
+        description={props.webPage?.fields.seoDescription}
+        openGraph={{
+          url: props.webPage?.fields.seoAbsoluteUrl,
+          title: props.webPage?.fields.seoTitle,
+          description: props.webPage?.fields.seoDescription,
+          site_name: props.siteName,
+          images: props.webPage?.fields.seoPageSnapshot?.map((s) => ({
+            url: s.fields.file.url,
+            width: s.fields.file.details.image?.width,
+            height: s.fields.file.details.image?.height,
+            alt: s.fields.title,
+            type: s.fields.file.contentType,
+          })),
+        }}
+      />
       <Header headerNav={props.headerNav} />
       {!!props.webPage && (
         <div>
@@ -50,7 +69,7 @@ export default Page;
 
 export const getStaticPaths = async ({}: GetStaticPathsContext) => {
   const paths: any[] = [];
-  const { webPages } = await getAllWebPages();
+  const { webPages } = await getAllStaticWebPages();
   webPages.forEach((p) => paths.push({ params: { pageName: p.fields.slug } }));
   return {
     paths,
@@ -60,10 +79,11 @@ export const getStaticPaths = async ({}: GetStaticPathsContext) => {
 
 export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const { pageName } = params as IParams;
-  const { webPage, headerNav, footerNav } =
+  const { webPage, headerNav, footerNav, siteName } =
     await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", pageName);
   return {
     props: {
+      siteName,
       webPage,
       headerNav,
       footerNav,
