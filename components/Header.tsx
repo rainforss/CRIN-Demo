@@ -39,6 +39,8 @@ const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
               px={8}
               isLoading={isLoading}
               disabled={isLoading}
+              as="a"
+              href="/login"
             >
               Login
             </Button>

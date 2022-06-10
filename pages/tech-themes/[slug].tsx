@@ -1,4 +1,4 @@
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { ExternalLinkIcon, LockIcon, UnlockIcon } from "@chakra-ui/icons";
 import { Badge, Box, StackDivider, VStack } from "@chakra-ui/react";
 import {
   documentToReactComponents,
@@ -109,20 +109,38 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
                   alignItems="center"
                 >
                   {cd.fields.restricted && !user ? (
-                    <Box as="a">
-                      {cd.fields.name} <ExternalLinkIcon />
+                    <Box
+                      as="a"
+                      display="flex"
+                      alignItems="center"
+                      style={{ gap: "1rem" }}
+                    >
+                      {cd.fields.name}{" "}
+                      {cd.fields.restricted && !user ? (
+                        <LockIcon fontSize="1rem" color="red" />
+                      ) : (
+                        <UnlockIcon fontSize="1rem" color="green" />
+                      )}
                     </Box>
                   ) : (
                     <Box
                       as="a"
                       target="_blank"
+                      display="flex"
+                      alignItems="center"
+                      style={{ gap: "1rem" }}
                       href={
-                        `https:${cd.fields.file?.fields.file.url}` ||
-                        cd.fields.externalResourceUrl ||
-                        "#"
+                        cd.fields.file?.fields.file.url
+                          ? `https:${cd.fields.file?.fields.file.url}`
+                          : cd.fields.externalResourceUrl || "#"
                       }
                     >
-                      {cd.fields.name} <ExternalLinkIcon />
+                      {cd.fields.name}{" "}
+                      {cd.fields.restricted && !user ? (
+                        <LockIcon fontSize="1rem" color="red" />
+                      ) : (
+                        <UnlockIcon fontSize="1rem" color="green" />
+                      )}
                     </Box>
                   )}
                   {cd.fields.restricted ? (
@@ -166,20 +184,38 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
                   alignItems="center"
                 >
                   {cd.fields.restricted && !user ? (
-                    <Box as="a">
-                      {cd.fields.name} <ExternalLinkIcon />
+                    <Box
+                      as="a"
+                      display="flex"
+                      alignItems="center"
+                      style={{ gap: "1rem" }}
+                    >
+                      {cd.fields.name}{" "}
+                      {cd.fields.restricted && !user ? (
+                        <LockIcon fontSize="1rem" color="red" />
+                      ) : (
+                        <UnlockIcon fontSize="1rem" color="green" />
+                      )}
                     </Box>
                   ) : (
                     <Box
                       as="a"
                       target="_blank"
+                      display="flex"
+                      alignItems="center"
+                      style={{ gap: "1rem" }}
                       href={
-                        `https:${cd.fields.file?.fields.file.url}` ||
-                        cd.fields.externalResourceUrl ||
-                        "#"
+                        cd.fields.file?.fields.file.url
+                          ? `https:${cd.fields.file?.fields.file.url}`
+                          : cd.fields.externalResourceUrl || "#"
                       }
                     >
-                      {cd.fields.name} <ExternalLinkIcon />
+                      {cd.fields.name}{" "}
+                      {cd.fields.restricted && !user ? (
+                        <LockIcon fontSize="1rem" color="red" />
+                      ) : (
+                        <UnlockIcon fontSize="1rem" color="green" />
+                      )}
                     </Box>
                   )}
                   {cd.fields.restricted ? (
@@ -223,20 +259,38 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
                   alignItems="center"
                 >
                   {cd.fields.restricted && !user ? (
-                    <Box as="a">
-                      {cd.fields.name} <ExternalLinkIcon />
+                    <Box
+                      as="a"
+                      display="flex"
+                      alignItems="center"
+                      style={{ gap: "1rem" }}
+                    >
+                      {cd.fields.name}{" "}
+                      {cd.fields.restricted && !user ? (
+                        <LockIcon fontSize="1rem" color="red" />
+                      ) : (
+                        <UnlockIcon fontSize="1rem" color="green" />
+                      )}
                     </Box>
                   ) : (
                     <Box
                       as="a"
                       target="_blank"
+                      display="flex"
+                      alignItems="center"
+                      style={{ gap: "1rem" }}
                       href={
-                        `https:${cd.fields.file?.fields.file.url}` ||
-                        cd.fields.externalResourceUrl ||
-                        "#"
+                        cd.fields.file?.fields.file.url
+                          ? `https:${cd.fields.file?.fields.file.url}`
+                          : cd.fields.externalResourceUrl || "#"
                       }
                     >
-                      {cd.fields.name} <ExternalLinkIcon />
+                      {cd.fields.name}{" "}
+                      {cd.fields.restricted && !user ? (
+                        <LockIcon fontSize="1rem" color="red" />
+                      ) : (
+                        <UnlockIcon fontSize="1rem" color="green" />
+                      )}
                     </Box>
                   )}
                   {cd.fields.restricted ? (

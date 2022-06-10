@@ -11,7 +11,7 @@ const ttl = 60 * 60 * 24 * 14;
 const sessionOptions: IronSessionOptions = {
   password: process.env.SESSION_PASSWORD!,
   ttl: ttl,
-  cookieName: "canucks_rugby_union",
+  cookieName: "Clean_Resource_Innovation_Network",
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",
