@@ -6,6 +6,7 @@ import {
 } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { GetServerSidePropsContext } from "next";
+import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
@@ -28,6 +29,7 @@ interface ITechThemeSlugProps {
   webPage: IWebPage | undefined;
   headerNav: INavigation;
   footerNav: INavigation;
+  siteName: string;
 }
 
 interface IParams extends ParsedUrlQuery {
@@ -39,11 +41,25 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
   webPage,
   headerNav,
   footerNav,
+  siteName,
 }) => {
   const { user, isLoading, isError } = useCurrentUser();
 
   return (
     <>
+      <NextSeo
+        title={publication.fields.name}
+        description={publication.fields.coverText}
+        openGraph={{
+          url:
+            webPage?.fields.seoAbsoluteUrl +
+            "/tech-themes" +
+            publication.fields.slug,
+          title: publication.fields.name,
+          description: publication.fields.coverText,
+          site_name: siteName,
+        }}
+      />
       <Header headerNav={headerNav} />
       <Box
         bgImage={`https://images.ctfassets.net/vjn6k5wzhope/7dp51SsKunOa29YbQwjdGb/2e28c43136269cb54083f8e40b2d19d9/header-home.jpg`}
@@ -365,7 +381,7 @@ export const getServerSideProps = async ({
     "Tech Themes",
     slug
   );
-  const { webPage, headerNav, footerNav } =
+  const { webPage, headerNav, footerNav, siteName } =
     await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
   return {
     props: {
@@ -373,6 +389,7 @@ export const getServerSideProps = async ({
       webPage,
       headerNav,
       footerNav,
+      siteName,
     },
   };
 };
