@@ -80,7 +80,7 @@ const Request: React.FunctionComponent<IRequestProps> = ({
               actions.resetForm();
               toast({
                 title: "Request submitted.",
-                description: `We've received your request ${result.data.bsi_title}. You will receive further emails about processing of your request.`,
+                description: `We've received your request ${result.data.result.bsi_title}. You will receive further emails about processing of your request.`,
                 status: "success",
                 duration: 3000,
                 isClosable: true,
