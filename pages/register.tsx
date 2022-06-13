@@ -26,7 +26,7 @@ const Register: NextPage<IRegisterProps> = (props) => {
     <Center
       h="100vh"
       w="100%"
-      bg="linear-gradient(to top right, #fc2c77 0%, #6c4079 100%)"
+      bg="linear-gradient(to top right, #404040 0%, #548D9A 100%)"
     >
       <Box w="50%" h="80vh" bg="white" borderRadius="10px" p="2rem">
         <Heading as="h2" p="1rem" py="2rem" fontWeight="normal">

@@ -21,7 +21,7 @@ const Login: NextPage<ILoginProps> = () => {
     <Center
       h="100vh"
       w="100%"
-      bg="linear-gradient(to top right, #bdebaa 0%, #7dd956 100%)"
+      bg="linear-gradient(to top right, #548D9A 0%, #404040 100%)"
     >
       <Box w="30%" h="80vh" bg="white" borderRadius="10px" p="2rem">
         <Heading as="h2" p="1rem" py="2rem" fontWeight="normal">
