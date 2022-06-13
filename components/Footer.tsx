@@ -30,13 +30,7 @@ const Footer: React.FunctionComponent<IFooterProps> = ({ footerNav }) => {
           </Box>
         </Link>
         <Box>
-          <Box
-            as="h5"
-            fontSize="1.5rem"
-            fontWeight="bold"
-            mb={6}
-            color={footerNav.fields.textColor}
-          >
+          <Box as="h5" fontSize="1.5rem" fontWeight="bold" mb={6} color="white">
             Welcome to the network!
           </Box>
           <Box display="flex" flexDirection="column">
