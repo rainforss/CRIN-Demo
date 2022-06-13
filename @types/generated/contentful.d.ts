@@ -185,15 +185,6 @@ export interface INavigationFields {
   /** Border Color */
   borderColor?: string | undefined;
 
-  /** Text Color */
-  textColor?: string | undefined;
-
-  /** Button Text Color */
-  buttonTextColor?: string | undefined;
-
-  /** Button Bg Color */
-  buttonBgColor?: string | undefined;
-
   /** Logo */
   logo: Asset;
 
@@ -336,7 +327,8 @@ export interface IPageSectionFields {
     | "CarouselSection"
     | "PublicationsSection"
     | "RichTextSection"
-    | "SecondaryHeroSection";
+    | "SecondaryHeroSection"
+    | "SubscriptionSection";
 
   /** Buttons */
   buttons?: IButton[] | undefined;

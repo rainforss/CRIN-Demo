@@ -78,7 +78,13 @@ const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
           </ButtonGroup>
         )}
       </Box>
-      <Box display="flex" justifyContent="space-between" px={32} py={8}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        px={32}
+        py={8}
+        bgColor={headerNav.fields.backgroundColor}
+      >
         <Link href="/" passHref>
           <Box as="a" w={80}>
             <Image
