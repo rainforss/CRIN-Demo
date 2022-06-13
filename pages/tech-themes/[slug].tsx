@@ -354,6 +354,7 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
                       as="a"
                       target="_blank"
                       href={p.fields.personalLink || "#"}
+                      fontWeight="bold"
                     >
                       {p.fields.fullName}
                     </Box>

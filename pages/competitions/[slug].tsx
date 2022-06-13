@@ -21,6 +21,7 @@ import {
   getPublicationsByType,
   getWebPageByWebsiteIdAndPageName,
 } from "../../services/contentful";
+import { richTextParserOption } from "../../utils/contentful/richTextParser";
 
 interface ICompetitionSlugProps {
   publication: IPublications;
@@ -41,23 +42,6 @@ const CompetitionSlug: React.FunctionComponent<ICompetitionSlugProps> = ({
   footerNav,
   siteName,
 }) => {
-  const options: Options = {
-    renderNode: {
-      [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        const { title, file } = node.data.target.fields;
-        return (
-          <Box w="500px" mx="auto" my={16}>
-            <Image
-              src={`https:${file.url}`}
-              alt={title}
-              width={file.details.image.width}
-              height={file.details.image.height}
-            />
-          </Box>
-        );
-      },
-    },
-  };
   return (
     <>
       <NextSeo
@@ -105,7 +89,10 @@ const CompetitionSlug: React.FunctionComponent<ICompetitionSlugProps> = ({
           </Box>
         </Box>
         <Box ml={32}>
-          {documentToReactComponents(publication.fields.content!, options)}
+          {documentToReactComponents(
+            publication.fields.content!,
+            richTextParserOption
+          )}
         </Box>
       </Box>
       <Footer footerNav={footerNav} />
