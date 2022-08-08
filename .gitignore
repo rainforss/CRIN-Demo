@@ -34,5 +34,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# code gen file
-getContentfulEnvironment.js
+# code gen settings file
+contentful-typegen.json

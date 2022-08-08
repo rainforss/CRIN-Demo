@@ -101,6 +101,34 @@ export interface IAttachment extends Entry<IAttachmentFields> {
   };
 }
 
+export interface IBrandingColorFields {
+  /** Name */
+  name: string;
+
+  /** Color */
+  color: string;
+
+  /** Description */
+  description?: string | undefined;
+}
+
+export interface IBrandingColor extends Entry<IBrandingColorFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "brandingColor";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
 export interface IButtonFields {
   /** Label */
   label: string;
@@ -312,6 +340,9 @@ export interface IPageSectionFields {
   /** Rich Text Body */
   richTextBody?: Document | undefined;
 
+  /** Text Content */
+  textContent?: Document | undefined;
+
   /** Background Color */
   backgroundColor?: string | undefined;
 
@@ -440,6 +471,52 @@ export interface IPublications extends Entry<IPublicationsFields> {
   };
 }
 
+export interface IThemeFields {
+  /** Name */
+  name: string;
+
+  /** Normal Text Color */
+  normalTextColor: IBrandingColor;
+
+  /** Normal Text Font Size */
+  normalTextFontSize: number;
+
+  /** Heading 1 Color */
+  heading1Color: IBrandingColor;
+
+  /** Heading 1 Font Size */
+  heading1FontSize: number;
+
+  /** Heading 2 Color */
+  heading2Color: IBrandingColor;
+
+  /** Heading 2 Font Size */
+  heading2FontSize: number;
+
+  /** Heading 3 Color */
+  heading3Color: IBrandingColor;
+
+  /** Heading 3 Font Size */
+  heading3FontSize: number;
+}
+
+export interface ITheme extends Entry<IThemeFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: "theme";
+        linkType: "ContentType";
+        type: "Link";
+      };
+    };
+  };
+}
+
 export interface IWebPageFields {
   /** Page Name */
   pageName: string;
@@ -532,6 +609,7 @@ export interface IWebsite extends Entry<IWebsiteFields> {
 export type CONTENT_TYPE =
   | "attachedComponent"
   | "attachment"
+  | "brandingColor"
   | "button"
   | "imageLink"
   | "navigation"
@@ -540,9 +618,10 @@ export type CONTENT_TYPE =
   | "pageSection"
   | "personnel"
   | "publications"
+  | "theme"
   | "webPage"
   | "website";
 
-export type LOCALE_CODE = "en-US";
+export type LOCALE_CODE = "en-US" | "fr-CA";
 
 export type CONTENTFUL_DEFAULT_LOCALE_CODE = "en-US";
