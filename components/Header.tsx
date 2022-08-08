@@ -20,7 +20,7 @@ interface IHeaderProps {
 }
 
 const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
-  const { user, isLoading, isError } = useCurrentUser();
+  const { user, isLoading } = useCurrentUser();
   return (
     <Box as="header">
       <Box

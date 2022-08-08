@@ -1,13 +1,8 @@
-import { ExternalLinkIcon, LockIcon, UnlockIcon } from "@chakra-ui/icons";
+import { LockIcon, UnlockIcon } from "@chakra-ui/icons";
 import { Badge, Box, StackDivider, VStack } from "@chakra-ui/react";
-import {
-  documentToReactComponents,
-  Options,
-} from "@contentful/rich-text-react-renderer";
-import { BLOCKS } from "@contentful/rich-text-types";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { GetServerSidePropsContext } from "next";
 import { NextSeo } from "next-seo";
-import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 import {
@@ -43,7 +38,7 @@ const TechThemeSlug: React.FunctionComponent<ITechThemeSlugProps> = ({
   footerNav,
   siteName,
 }) => {
-  const { user, isLoading, isError } = useCurrentUser();
+  const { user } = useCurrentUser();
 
   return (
     <>

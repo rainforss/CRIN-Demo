@@ -22,7 +22,6 @@ const MemberDirectory: React.FunctionComponent<IMemberDirectoryProps> = ({
   members,
   headerNav,
   footerNav,
-  siteName,
 }) => {
   return (
     <>
@@ -76,7 +75,7 @@ export const getServerSideProps = withSessionSsr(
     const members = await dynamicsContact(
       accessToken!
     ).getBySearchstringMemberType();
-    const { webPage, headerNav, footerNav, siteName } =
+    const { headerNav, footerNav, siteName } =
       await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
     return {
       props: { members, headerNav, footerNav, siteName },

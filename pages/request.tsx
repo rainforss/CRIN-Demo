@@ -1,6 +1,6 @@
 import { Box, Button, Input, useToast } from "@chakra-ui/react";
 import axios from "axios";
-import { Formik, FormikProps, Form } from "formik";
+import { Formik, Form } from "formik";
 import router from "next/router";
 import * as React from "react";
 import { IWebPage, INavigation } from "../@types/generated/contentful";
@@ -9,11 +9,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextAreaInput from "../components/TextAreaInput";
 import TextInput from "../components/TextInput";
-import {
-  getWebPageByWebsiteIdAndPageName,
-  getPublicationsByType,
-} from "../services/contentful";
-import { submitRegistration } from "../services/user";
+import { getWebPageByWebsiteIdAndPageName } from "../services/contentful";
 import { withSessionSsr } from "../utils/authentication/withSession";
 import { requestSchema } from "../utils/formik-forms/validation";
 

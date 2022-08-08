@@ -1,0 +1,4 @@
+.next
+@types
+dist
+node_modules

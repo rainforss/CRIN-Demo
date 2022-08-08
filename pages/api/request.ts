@@ -15,7 +15,7 @@ export const config = {
 async function requestRoute(req: NextApiRequest, res: NextApiResponse) {
   try {
     switch (req.method) {
-      case "POST":
+      case "POST": {
         if (!req.session.user) {
           return res.status(401).json({
             error: {
@@ -89,6 +89,7 @@ async function requestRoute(req: NextApiRequest, res: NextApiResponse) {
           files.file.originalFilename
         );
         return res.status(200).json({ result });
+      }
       default:
         return res.status(405).json({
           error: {

@@ -4,10 +4,9 @@ import { dynamicsContact } from "../../../services/dynamicsContact";
 import { instantiateCca } from "../../../utils/msal/cca";
 import bcrypt from "bcrypt";
 import { withSessionRoute } from "../../../utils/authentication/withSession";
-import { IronSessionData } from "iron-session";
 
 declare module "iron-session" {
-  interface IronSessionData {
+  export interface IronSessionData {
     user?: {
       id: string;
       fullname: string;
@@ -46,7 +45,7 @@ async function authenticateRoute(req: NextApiRequest, res: NextApiResponse) {
 
   const { username, password } = req.body;
   switch (req.method) {
-    case "POST":
+    case "POST": {
       const users = await dynamicsContact(
         tokenResponse.accessToken
       ).getByUsername(username);
@@ -93,6 +92,7 @@ async function authenticateRoute(req: NextApiRequest, res: NextApiResponse) {
           },
         });
       }
+    }
 
     default:
       return res.status(405).json({

@@ -1,8 +1,4 @@
-import type {
-  GetStaticPathsContext,
-  GetStaticPropsContext,
-  NextPage,
-} from "next";
+import type { GetStaticPropsContext, NextPage } from "next";
 import { NextSeo } from "next-seo";
 import { ParsedUrlQuery } from "querystring";
 import { INavigation, IWebPage } from "../@types/generated/contentful";
@@ -67,7 +63,7 @@ const Page: NextPage<IPageProps> = (props) => {
 
 export default Page;
 
-export const getStaticPaths = async ({}: GetStaticPathsContext) => {
+export const getStaticPaths = async () => {
   const paths: any[] = [];
   const { webPages } = await getAllStaticWebPages();
   webPages.forEach((p) => paths.push({ params: { pageName: p.fields.slug } }));

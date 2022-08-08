@@ -19,7 +19,7 @@ export interface RegistrationValues {
 
 interface IRegisterProps {}
 
-const Register: NextPage<IRegisterProps> = (props) => {
+const Register: NextPage<IRegisterProps> = () => {
   const toast = useToast();
   const router = useRouter();
   return (

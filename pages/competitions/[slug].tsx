@@ -1,12 +1,7 @@
 import { Box } from "@chakra-ui/react";
-import {
-  documentToReactComponents,
-  Options,
-} from "@contentful/rich-text-react-renderer";
-import { BLOCKS } from "@contentful/rich-text-types";
-import { GetServerSidePropsContext, GetStaticPathsContext } from "next";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { GetServerSidePropsContext } from "next";
 import { NextSeo } from "next-seo";
-import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import * as React from "react";
 import {
@@ -102,7 +97,7 @@ const CompetitionSlug: React.FunctionComponent<ICompetitionSlugProps> = ({
 
 export default CompetitionSlug;
 
-export const getStaticPaths = async ({}: GetStaticPathsContext) => {
+export const getStaticPaths = async () => {
   const paths: any[] = [];
   const { publications } = await getPublicationsByType("Competitions");
   publications.forEach((p) => paths.push({ params: { slug: p.fields.slug } }));

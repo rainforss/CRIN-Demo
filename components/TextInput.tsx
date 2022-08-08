@@ -26,7 +26,7 @@ const TextInput: React.FunctionComponent<ITextInputProps> = ({
   isRequired,
   ...chakraProps
 }) => {
-  const [field, meta, _helpers] = useField(name);
+  const [field, meta] = useField(name);
   return (
     <FormControl
       isInvalid={!!(meta.error && meta.touched)}
