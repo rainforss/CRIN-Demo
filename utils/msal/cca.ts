@@ -10,6 +10,7 @@ if (!cachedCca) {
 
 export const instantiateCca = async () => {
   try {
+    //If there is a globally cached cca instance, return the instance. Otherwise, create new instance
     if (cachedCca) {
       return cachedCca;
     }
@@ -36,7 +37,11 @@ export const instantiateCca = async () => {
     );
     cachedCca = confidentialClientApplication;
     return cachedCca;
-  } catch (error) {
+  } catch (error: any) {
+    //Typical D365 query error is an object with key 'error'
+    if (error.error.code) {
+      throw new Error("D365 Error");
+    }
     throw error;
   }
 };

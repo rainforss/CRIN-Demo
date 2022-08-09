@@ -11,130 +11,102 @@ const client = require("contentful").createClient({
 });
 
 export const getHomePageImageSections = async () => {
-  try {
-    const homePageEntry = await client.getEntry("sdgsdg");
-    return homePageEntry;
-  } catch (err) {
-    throw err;
-  }
+  const homePageEntry = await client.getEntry("sdgsdg");
+  return homePageEntry;
 };
 
 export const getHeaderAndFooterNavigationOfWebsite = async (
   websiteId: string
 ) => {
-  try {
-    const headerNav = await client.getEntries({
-      content_type: "navigation",
-      "fields.navigationType": "Header",
-      "fields.website.sys.id": websiteId,
-      include: 2,
-    });
-    const headerLogo = headerNav.includes.Asset[0];
-    const footerNav = await client.getEntries({
-      content_type: "navigation",
-      "fields.navigationType": "Footer",
-      "fields.website.sys.id": websiteId,
-      include: 2,
-    });
-    const footerLogo = footerNav.includes.Asset[0];
-    return { headerNav, footerNav, headerLogo, footerLogo };
-  } catch (err) {
-    throw err;
-  }
+  const headerNav = await client.getEntries({
+    content_type: "navigation",
+    "fields.navigationType": "Header",
+    "fields.website.sys.id": websiteId,
+    include: 2,
+  });
+  const headerLogo = headerNav.includes.Asset[0];
+  const footerNav = await client.getEntries({
+    content_type: "navigation",
+    "fields.navigationType": "Footer",
+    "fields.website.sys.id": websiteId,
+    include: 2,
+  });
+  const footerLogo = footerNav.includes.Asset[0];
+  return { headerNav, footerNav, headerLogo, footerLogo };
 };
 
 export const getPageSectionsOfWebPage = async (webPageName: string) => {
-  try {
-    const webPage = await client.getEntries({
-      content_type: "webPage",
-      "fields.pageName": webPageName,
-      include: 2,
-    });
-    const pageSections = webPage.includes.Entry;
-    const imageAssets = webPage.includes.Asset;
-    return { webPage, pageSections, imageAssets };
-  } catch (err) {
-    throw err;
-  }
+  const webPage = await client.getEntries({
+    content_type: "webPage",
+    "fields.pageName": webPageName,
+    include: 2,
+  });
+  const pageSections = webPage.includes.Entry;
+  const imageAssets = webPage.includes.Asset;
+  return { webPage, pageSections, imageAssets };
 };
 
 export const getPublicationByTypeAndSlug = async (
   type: string,
   slug: string
 ) => {
-  try {
-    const publication: IPublications = (
-      await client.getEntries({
-        content_type: "publications",
-        "fields.type": type,
-        "fields.slug": slug,
-        include: 2,
-      })
-    ).items[0];
-    return { publication };
-  } catch (err) {
-    throw err;
-  }
+  const publication: IPublications = (
+    await client.getEntries({
+      content_type: "publications",
+      "fields.type": type,
+      "fields.slug": slug,
+      include: 2,
+    })
+  ).items[0];
+  return { publication };
 };
 
 export const getPublicationsByType = async (type: string) => {
-  try {
-    const publications: IPublications[] = (
-      await client.getEntries({
-        content_type: "publications",
-        "fields.type": type,
-        include: 2,
-      })
-    ).items;
-    return { publications };
-  } catch (err) {
-    throw err;
-  }
+  const publications: IPublications[] = (
+    await client.getEntries({
+      content_type: "publications",
+      "fields.type": type,
+      include: 2,
+    })
+  ).items;
+  return { publications };
 };
 
 export const getAllStaticWebPages = async () => {
-  try {
-    const webPages: IWebPage[] = (
-      await client.getEntries({
-        content_type: "webPage",
-        "fields.pageType": "Static Page",
-        include: 3,
-      })
-    ).items;
-    return {
-      webPages,
-    };
-  } catch (err) {
-    throw err;
-  }
+  const webPages: IWebPage[] = (
+    await client.getEntries({
+      content_type: "webPage",
+      "fields.pageType": "Static Page",
+      include: 3,
+    })
+  ).items;
+  return {
+    webPages,
+  };
 };
 
 export const getWebPageByWebsiteIdAndPageName = async (
   websiteId: string,
   pageName: string
 ) => {
-  try {
-    const website: IWebsite = (
-      await client.getEntries({
-        content_type: "website",
-        "sys.id": websiteId,
-        include: 3,
-      })
-    ).items[0];
-    const webPage: IWebPage | undefined = pageName
-      ? website!.fields!.webPages!.find((wp: any) =>
-          wp.fields.slug.includes(pageName)
-        )
-      : undefined;
-    const headerNav: INavigation = website.fields.headerNavigation!;
-    const footerNav: INavigation = website.fields.footerNavigation!;
-    return {
-      siteName: website.fields.name,
-      webPage,
-      headerNav,
-      footerNav,
-    };
-  } catch (err) {
-    throw err;
-  }
+  const website: IWebsite = (
+    await client.getEntries({
+      content_type: "website",
+      "sys.id": websiteId,
+      include: 3,
+    })
+  ).items[0];
+  const webPage: IWebPage | undefined = pageName
+    ? website!.fields!.webPages!.find((wp: any) =>
+        wp.fields.slug.includes(pageName)
+      )
+    : undefined;
+  const headerNav: INavigation = website.fields.headerNavigation!;
+  const footerNav: INavigation = website.fields.footerNavigation!;
+  return {
+    siteName: website.fields.name,
+    webPage,
+    headerNav,
+    footerNav,
+  };
 };

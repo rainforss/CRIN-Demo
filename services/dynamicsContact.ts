@@ -9,6 +9,18 @@ import { Contact, Member } from "../types/dynamics-365/common/types";
 export const dynamicsContact = (accessToken: string) => {
   const config = new WebApiConfig("9.1", accessToken, process.env.CLIENT_URL);
   return {
+    //Get only 10 member profiles for members with limited access
+    getMemberProfilesForIntermediateAccessMember: async () => {
+      const members = await retrieveMultiple(
+        config,
+        "contacts",
+        `$top=10&$orderby=firstname asc&$select=bsi_membertype,bsi_linkedinprofile,bsi_twitterprofile,bsi_othersocialmediaprofile&$expand=bsi_MemberCompany($select=bsi_name)`
+      );
+
+      return members.value as Contact[];
+    },
+
+    //Get the contact record from D365 by querying the username
     getByUsername: async (username: string) => {
       const contact = await retrieveMultiple(
         config,
@@ -19,6 +31,7 @@ export const dynamicsContact = (accessToken: string) => {
       return contact.value as Contact[];
     },
 
+    //Get the contact record from D365 by matching username or email
     getByUsernameOrEmail: async (username: string, email: string) => {
       const contact = await retrieveMultiple(
         config,
@@ -29,6 +42,7 @@ export const dynamicsContact = (accessToken: string) => {
       return contact.value as Contact[];
     },
 
+    //Get contacts by the member type
     getByMemberType: async (membertype: number) => {
       const contacts = await retrieveMultiple(
         config,
@@ -40,6 +54,7 @@ export const dynamicsContact = (accessToken: string) => {
       return contacts.value as Member[];
     },
 
+    //Get contacts by the member type and matching search string
     getBySearchstringMemberType: async (
       searchstring?: string,
       membertype?: number
@@ -60,7 +75,7 @@ export const dynamicsContact = (accessToken: string) => {
         config,
         "contacts",
         `${
-          !!filterString ? `${filterString}&` : ""
+          filterString ? `${filterString}&` : ""
         }$select=fullname,emailaddress1,customertypecode,bsi_organization,jobtitle`,
         { representation: true }
       );
@@ -68,6 +83,7 @@ export const dynamicsContact = (accessToken: string) => {
       return contacts.value as Member[];
     },
 
+    //Create a new contact based on the registration information
     createUser: async (user: User) => {
       const createdUser = await createWithReturnData(
         config,
