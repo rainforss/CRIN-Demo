@@ -25,11 +25,11 @@ const handler = nc<NextApiRequest, NextApiResponse>({
         },
       });
     }
-    if (err.message === "D365 Error") {
+    if (err.message === "Invalid Query") {
       return res.status(400).json({
         error: {
-          name: "D365 Error",
-          message: "Integration error, please contact our IT admin.",
+          name: "Invalid Query",
+          message: "Invalid query string, missing member id information.",
         },
       });
     }
@@ -41,7 +41,10 @@ const handler = nc<NextApiRequest, NextApiResponse>({
   if (!req.session.user) {
     throw new Error("Not Authenticated");
   }
-  const { keyword, memberType, techTheme } = req.query;
+  const { id } = req.query;
+  if (!id) {
+    throw new Error("Invalid Query");
+  }
   const cca = await instantiateCca();
   const clientCredentialsRequest: ClientCredentialRequest = {
     scopes: [`${process.env.CLIENT_URL}/.default`],
@@ -54,15 +57,11 @@ const handler = nc<NextApiRequest, NextApiResponse>({
   if (!tokenResponse) {
     throw new Error("Server Error");
   }
-  const members = await dynamicsContact(
-    tokenResponse.accessToken
-  ).getBySearchstringMemberTypeTechTheme(
-    keyword as string,
-    parseInt(memberType as string),
-    techTheme as string
+  const member = await dynamicsContact(tokenResponse.accessToken).getById(
+    id as string
   );
 
-  return res.status(200).json([...members]);
+  return res.status(200).json({ ...member });
 });
 
 export default withSessionRoute(handler);

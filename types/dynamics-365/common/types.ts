@@ -26,7 +26,36 @@ export interface Member extends Entity {
   "customertypecode@OData.Community.Display.V1.FormattedValue": string;
   bsi_organization: string;
   jobtitle: string;
+  bsi_membertype: number;
+  "bsi_membertype@OData.Community.Display.V1.FormattedValue": string;
+  bsi_MemberCompany: {
+    bsi_name: string;
+    bsi_membercompanyid: string;
+  };
+  address1_city: string;
+  address1_country: string;
+  bsi_dateregistered: Date;
+  telephone1: string;
+  bsi_MemberAssociatedSector_Member_Contact: Array<{
+    bsi_name: string;
+    "bsi_organizationsize@OData.Community.Display.V1.FormattedValue": string;
+  }>;
+  bsi_bsi_memberassociatedtheme_Member_contact: Array<{ bsi_name: string }>;
 }
+
+export type DynamicsMemberType = {
+  Value: number;
+  Label: {
+    UserLocalizedLabel: {
+      Label: string;
+    };
+  };
+};
+
+export type DynamicsTheme = {
+  bsi_name: string;
+  bsi_themeid: string;
+};
 
 export type DynamicsBlog = {
   bsi_name: string;

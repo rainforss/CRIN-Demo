@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Link from "next/link";
 import * as React from "react";
 import { IPageSection } from "../@types/generated/contentful";

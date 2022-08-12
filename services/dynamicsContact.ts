@@ -2,6 +2,7 @@ import {
   WebApiConfig,
   retrieveMultiple,
   createWithReturnData,
+  retrieve,
 } from "dataverse-webapi/lib/node";
 import { User } from "../types/authentication";
 import { Contact, Member } from "../types/dynamics-365/common/types";
@@ -14,7 +15,8 @@ export const dynamicsContact = (accessToken: string) => {
       const members = await retrieveMultiple(
         config,
         "contacts",
-        `$top=10&$orderby=firstname asc&$select=bsi_membertype,bsi_linkedinprofile,bsi_twitterprofile,bsi_othersocialmediaprofile&$expand=bsi_MemberCompany($select=bsi_name)`
+        `$top=9&$orderby=firstname asc&$select=bsi_membertype,bsi_linkedinprofile,bsi_twitterprofile,bsi_othersocialmediaprofile,fullname,emailaddress1,telephone1,address1_city,address1_country,jobtitle&$expand=bsi_MemberCompany($select=bsi_name,bsi_organizationsize),bsi_MemberAssociatedSector_Member_Contact($select=bsi_name),bsi_bsi_memberassociatedtheme_Member_contact($select=bsi_name)`,
+        { representation: true }
       );
 
       return members.value as Contact[];
@@ -55,32 +57,50 @@ export const dynamicsContact = (accessToken: string) => {
     },
 
     //Get contacts by the member type and matching search string
-    getBySearchstringMemberType: async (
+    getBySearchstringMemberTypeTechTheme: async (
       searchstring?: string,
-      membertype?: number
+      membertype?: number,
+      techtheme?: string
     ) => {
-      let filterString = "";
+      const filters = [];
       if (searchstring) {
-        filterString += `$filter=fullname contains ${searchstring}`;
-        if (membertype !== undefined) {
-          filterString += ` and customertypecode eq ${membertype}`;
-        }
-      } else {
-        if (membertype !== undefined) {
-          filterString += `$filter=customertypecode eq ${membertype}`;
-        }
+        filters.push(`startswith(fullname,'${searchstring}')`);
+      }
+      if (membertype) {
+        filters.push(`bsi_membertype eq ${membertype}`);
+      }
+      if (techtheme) {
+        filters.push(
+          `bsi_bsi_memberassociatedtheme_Member_contact/any(o:o/_bsi_theme_value eq ${techtheme})`
+        );
       }
 
-      const contacts = await retrieveMultiple(
+      const contacts: any = await retrieveMultiple(
         config,
         "contacts",
         `${
-          filterString ? `${filterString}&` : ""
-        }$select=fullname,emailaddress1,customertypecode,bsi_organization,jobtitle`,
+          filters.length !== 0 ? `$filter=${filters.join(" and ")}&` : ""
+        }$top=9&$orderby=firstname asc&$select=bsi_membertype,bsi_linkedinprofile,bsi_twitterprofile,bsi_othersocialmediaprofile,fullname,emailaddress1,telephone1,address1_city,address1_country,jobtitle&$expand=bsi_MemberCompany($select=bsi_name,bsi_organizationsize),bsi_MemberAssociatedSector_Member_Contact($select=bsi_name),bsi_bsi_memberassociatedtheme_Member_contact($select=bsi_name)`,
         { representation: true }
       );
 
+      if (contacts.error) {
+        throw new Error("D365 Error");
+      }
       return contacts.value as Member[];
+    },
+
+    getById: async (id: string) => {
+      const member = await retrieve(
+        config,
+        "contacts",
+        id,
+        "$select=fullname,emailaddress1,customertypecode,bsi_organization,jobtitle"
+      );
+      if (member.error) {
+        throw new Error("D365 Error");
+      }
+      return member;
     },
 
     //Create a new contact based on the registration information

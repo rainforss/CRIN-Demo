@@ -2,6 +2,7 @@ import { TokenCacheContext } from "@azure/msal-node";
 
 export async function cachePluginFunc(
   tokenExists: () => Promise<number>,
+  // eslint-disable-next-line
   setToken: (token: string) => Promise<void>,
   getToken: () => Promise<string | null>
 ) {

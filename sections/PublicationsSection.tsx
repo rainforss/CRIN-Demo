@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import * as React from "react";
-import { IPageSection, IPublications } from "../@types/generated/contentful";
+import { IPageSection } from "../@types/generated/contentful";
 import PublicationCard from "../components/PublicationCard";
 
 interface IPublicationsSectionProps {

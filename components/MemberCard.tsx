@@ -14,7 +14,7 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({ member }) => {
       flexDirection="column"
       justifyContent="space-between"
       w="30%"
-      h="150px"
+      h="250px"
       border="1px solid #548D9A"
       borderRadius="10px"
       mb={0}
@@ -34,11 +34,11 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({ member }) => {
           </Box>
         </Link>
         <Badge colorScheme="teal" mt={4}>
-          {member["customertypecode@OData.Community.Display.V1.FormattedValue"]}
+          {member["bsi_membertype@OData.Community.Display.V1.FormattedValue"]}
         </Badge>
       </Box>
-      <Box as="span">{member.bsi_organization}</Box>
-      <Box as="span">{member.jobtitle}</Box>
+      <Box as="span">{member.bsi_MemberCompany?.bsi_name}</Box>
+      <Box as="span">{member.emailaddress1}</Box>
     </Box>
   );
 };

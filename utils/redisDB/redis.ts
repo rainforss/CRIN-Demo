@@ -1,41 +1,49 @@
-import { createClient } from "redis";
+import Redis from "ioredis";
 
-const client = createClient({ url: process.env.REDIS_URL });
+declare global {
+  // eslint-disable-next-line
+  var client: Redis;
+}
 
-const connect = async () => {
-  if (client.isOpen) {
-    console.log("Already connected to Redis");
-    return;
-  }
+if (!global.client) {
+  global.client = new Redis(process.env.REDIS_URL!);
+}
 
-  await client.connect();
-  console.log("Connected successfully.");
-};
+export default global.client;
 
-export const disconnect = async () => {
-  if (!client.isOpen) {
-    return;
-  }
-  await client.disconnect();
-  console.log("Disconnected.");
-};
+// const client = new Redis(process.env.REDIS_URL!);
+
+// export default client;
+
+// const connect = async () => {
+//   if (client.isOpen) {
+//     console.log("Already connected to Redis");
+//     return;
+//   }
+
+//   await client.connect();
+//   console.log("Connected successfully.");
+// };
+
+// export const disconnect = async () => {
+//   if (!client.isOpen) {
+//     return;
+//   }
+//   console.log("Already disconnected");
+//   await client.disconnect();
+//   console.log("Disconnected.");
+// };
 
 export const tokenKeyExist = async () => {
-  await connect();
-  const exists = await client.exists("cachedCRINToken");
-  await disconnect();
+  const exists = await global.client.exists("cachedCRINToken");
   return exists;
 };
 
 export const getcache = async () => {
-  await connect();
-  const cache = await client.get("cachedCRINToken");
-  await disconnect();
+  const cache = await global.client.get("cachedCRINToken");
   return cache;
 };
 
 export const setcache = async (token: string) => {
-  await connect();
-  await client.set("cachedCRINToken", token);
-  return await disconnect();
+  await global.client.set("cachedCRINToken", token);
 };

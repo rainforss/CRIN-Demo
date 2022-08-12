@@ -3,7 +3,7 @@ import { withSessionRoute } from "../../../utils/authentication/withSession";
 import nc from "next-connect";
 import { ClientCredentialRequest } from "@azure/msal-node";
 import { instantiateCca } from "../../../utils/msal/cca";
-import { dynamicsContact } from "../../../services/dynamicsContact";
+import { dynamicsTechThemes } from "../../../services/dynamicsTechThemes";
 
 const handler = nc<NextApiRequest, NextApiResponse>({
   onError: (err, _req, res) => {
@@ -25,6 +25,14 @@ const handler = nc<NextApiRequest, NextApiResponse>({
         },
       });
     }
+    if (err.message === "Invalid Query") {
+      return res.status(400).json({
+        error: {
+          name: "Invalid Query",
+          message: "Invalid query string, missing member id information.",
+        },
+      });
+    }
     if (err.message === "D365 Error") {
       return res.status(400).json({
         error: {
@@ -41,7 +49,6 @@ const handler = nc<NextApiRequest, NextApiResponse>({
   if (!req.session.user) {
     throw new Error("Not Authenticated");
   }
-  const { keyword, memberType, techTheme } = req.query;
   const cca = await instantiateCca();
   const clientCredentialsRequest: ClientCredentialRequest = {
     scopes: [`${process.env.CLIENT_URL}/.default`],
@@ -54,15 +61,11 @@ const handler = nc<NextApiRequest, NextApiResponse>({
   if (!tokenResponse) {
     throw new Error("Server Error");
   }
-  const members = await dynamicsContact(
+  const techThemes = await dynamicsTechThemes(
     tokenResponse.accessToken
-  ).getBySearchstringMemberTypeTechTheme(
-    keyword as string,
-    parseInt(memberType as string),
-    techTheme as string
-  );
+  ).getAllTechThemes();
 
-  return res.status(200).json([...members]);
+  return res.status(200).json([...techThemes]);
 });
 
 export default withSessionRoute(handler);

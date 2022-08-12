@@ -13,6 +13,28 @@ const nextConfig = {
       },
     ];
   },
+  async headers() {
+    return [
+      {
+        source: "/api/members",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, max-age=60, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/api/options/membertype",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "private, max-age=1800, must-revalidate",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
