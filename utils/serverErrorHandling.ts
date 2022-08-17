@@ -38,7 +38,7 @@ export const errorResponse = (errMessage: string) => {
   }
 
   return {
-    status: 400,
+    status: 500,
     error: {
       name: "Server Error",
       message:

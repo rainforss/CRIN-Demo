@@ -24,12 +24,11 @@ const handler = nc<NextApiRequest, NextApiResponse>({
     if (!options) {
       throw new Error("Bad Request");
     }
-    options.forEach((o: any) =>
-      config.sectors.push({
-        value: o.bsi_organizationsectorid,
-        label: o.bsi_name,
-      })
-    );
+
+    config.sectors = options.map((o: any) => ({
+      value: o.bsi_organizationsectorid,
+      label: o.bsi_name,
+    }));
     fs.writeFileSync(path, JSON.stringify(config));
     return res.status(200).json({ success: true });
   })
