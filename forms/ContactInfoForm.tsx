@@ -40,7 +40,9 @@ const ContactInfoForm: React.FunctionComponent<IContactInfoFormProps> = ({
         lastname: member.lastname,
         emailaddress1: member.emailaddress1,
         telephone1: member.telephone1,
-        bsi_membertype: member.bsi_membertype.toString(),
+        bsi_membertype: member.bsi_membertype
+          ? member.bsi_membertype.toString()
+          : "",
         donotbulkemail: member.donotbulkemail,
       }}
       onSubmit={async (values, actions) => {

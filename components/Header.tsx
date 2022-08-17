@@ -9,8 +9,10 @@ import {
   Link as ChakraLink,
   ButtonGroup,
 } from "@chakra-ui/react";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { INavigation } from "../@types/generated/contentful";
 import { useCurrentUser } from "../hooks/useCurrentUser";
@@ -21,6 +23,11 @@ interface IHeaderProps {
 
 const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
   const { user, isLoading } = useCurrentUser();
+  const router = useRouter();
+  const logout = async () => {
+    await axios.get("/api/user/logout");
+    router.push("/");
+  };
   return (
     <Box as="header">
       <Box
@@ -59,7 +66,7 @@ const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
             </Button>
             <Button
               as="a"
-              href="/profile"
+              href="/member-directory/my-profile"
               variant="outline"
               color="white"
               _hover={{ bgColor: "black", borderColor: "black" }}
@@ -72,6 +79,7 @@ const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
               color="white"
               px={8}
               _hover={{ color: "black", bgColor: "white" }}
+              onClick={logout}
             >
               Log Out
             </Button>
