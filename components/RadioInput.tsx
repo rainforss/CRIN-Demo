@@ -15,6 +15,9 @@ interface IRadioInputProps extends ChakraProps {
   name: string;
   label: string;
   options: Array<{ value: string | number; label: string }>;
+  isRequired?: boolean;
+  isEditing?: boolean;
+  alignment?: "row" | "column";
 }
 
 const RadioInput: React.FunctionComponent<IRadioInputProps> = ({
@@ -22,15 +25,29 @@ const RadioInput: React.FunctionComponent<IRadioInputProps> = ({
   name,
   label,
   options,
+  isRequired,
+  isEditing,
+  alignment,
   ...chakraProps
 }) => {
   const [field, meta, helper] = useField(name);
   return (
-    <FormControl {...chakraProps}>
+    <FormControl
+      {...chakraProps}
+      isRequired={isRequired}
+      isInvalid={!!(meta.error && meta.touched)}
+    >
       <FormLabel>{label}</FormLabel>
-      <RadioGroup value={field.value} id={id} onChange={helper.setValue}>
-        <Stack>
-          <Radio value="">All</Radio>
+      <RadioGroup
+        value={field.value.toString()}
+        id={id}
+        onChange={helper.setValue}
+      >
+        <Stack
+          spacing={alignment === "row" ? 4 : 2}
+          direction={alignment || "column"}
+        >
+          {!isEditing && <Radio value="">All</Radio>}
           {options.map((o) => (
             <Radio value={o.value} key={o.value}>
               {o.label}

@@ -23,9 +23,7 @@ const MemberCard: React.FunctionComponent<IMemberCardProps> = ({ member }) => {
       <Box display="flex" flexDirection="column" alignItems="flex-start">
         <Link
           href={
-            member.emailaddress1
-              ? `/member-directory/${member.emailaddress1}`
-              : "#"
+            member.emailaddress1 ? `/member-directory/${member.contactid}` : "#"
           }
           passHref
         >

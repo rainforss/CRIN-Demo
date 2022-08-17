@@ -1,0 +1,111 @@
+{
+  "membertypes": [
+    { "value": "760720000", "label": "Professional" },
+    { "value": "760720001", "label": "Student" },
+    { "value": "760720002", "label": "Retiree" },
+    { "value": "760720003", "label": "Organization" },
+    { "value": "760720004", "label": "Other" }
+  ],
+  "sectors": [
+    { "value": "5056c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Academia" },
+    { "value": "5d56c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Accelerator" },
+    {
+      "value": "5b56c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Banking / Finance"
+    },
+    {
+      "value": "5f56c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Economic Development"
+    },
+    { "value": "6156c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "End User" },
+    {
+      "value": "6356c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Engineering and Supply Chain"
+    },
+    {
+      "value": "6556c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Entrepreneur"
+    },
+    { "value": "4c56c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Government" },
+    { "value": "5456c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Incubators" },
+    { "value": "4856c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Individual" },
+    {
+      "value": "5656c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Industry Association"
+    },
+    {
+      "value": "6756c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Investor / Funder"
+    },
+    { "value": "6956c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Midstream" },
+    {
+      "value": "4e56c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Oil & Gas Producer (small, medium or large)"
+    },
+    { "value": "7756c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Other" },
+    {
+      "value": "6b56c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Post-Secondary"
+    },
+    { "value": "6d56c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Regulator" },
+    {
+      "value": "4a56c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Research / Innovator"
+    },
+    {
+      "value": "6f56c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Research Institution, Council, Consortium"
+    },
+    {
+      "value": "4656c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Service and Supply"
+    },
+    {
+      "value": "7156c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Social Innovator (e.g., think tank)"
+    },
+    { "value": "5956c208-35e1-ec11-bb3d-000d3a09f3b7", "label": "Student" },
+    {
+      "value": "7356c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Technology Company (small, medium or large)"
+    },
+    {
+      "value": "5256c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Transport / Midstream"
+    },
+    {
+      "value": "7556c208-35e1-ec11-bb3d-000d3a09f3b7",
+      "label": "Young Professional"
+    }
+  ],
+  "themetypes": [
+    {
+      "value": "0657f974-5f89-ec11-8d20-0022486df0e8",
+      "label": "Cleaner Fuels"
+    },
+    {
+      "value": "0857f974-5f89-ec11-8d20-0022486df0e8",
+      "label": "Digital Oil and Gas"
+    },
+    {
+      "value": "1057f974-5f89-ec11-8d20-0022486df0e8",
+      "label": "Land and Wellsite Remediation"
+    },
+    {
+      "value": "0a57f974-5f89-ec11-8d20-0022486df0e8",
+      "label": "Low Emission Value Added Products"
+    },
+    {
+      "value": "0c57f974-5f89-ec11-8d20-0022486df0e8",
+      "label": "Methane Monitoring, Quantification, and Abatement"
+    },
+    {
+      "value": "0e57f974-5f89-ec11-8d20-0022486df0e8",
+      "label": "Novel Hydrocarbon Extraction"
+    },
+    {
+      "value": "1257f974-5f89-ec11-8d20-0022486df0e8",
+      "label": "Water Technology Development"
+    }
+  ]
+}

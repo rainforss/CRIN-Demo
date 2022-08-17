@@ -4,43 +4,13 @@ import nc from "next-connect";
 import { ClientCredentialRequest } from "@azure/msal-node";
 import { instantiateCca } from "../../../utils/msal/cca";
 import { dynamicsTechThemes } from "../../../services/dynamicsTechThemes";
+import { errorResponse } from "../../../utils/serverErrorHandling";
 
 const handler = nc<NextApiRequest, NextApiResponse>({
   onError: (err, _req, res) => {
     console.error(err.stack);
-    if (err.message === "Not Authenticated") {
-      return res.status(401).json({
-        error: {
-          name: "Not Authenticated",
-          message: "User is not logged in.",
-        },
-      });
-    }
-    if (err.message === "Server Error") {
-      return res.status(500).json({
-        error: {
-          name: "Server Error",
-          message:
-            "Internal server error, could not retrieve an access token for Dynamics 365 environment.",
-        },
-      });
-    }
-    if (err.message === "Invalid Query") {
-      return res.status(400).json({
-        error: {
-          name: "Invalid Query",
-          message: "Invalid query string, missing member id information.",
-        },
-      });
-    }
-    if (err.message === "D365 Error") {
-      return res.status(400).json({
-        error: {
-          name: "D365 Error",
-          message: "Integration error, please contact our IT admin.",
-        },
-      });
-    }
+    const { status, error } = errorResponse(err.message);
+    return res.status(status).json({ error });
   },
   onNoMatch: (_req, res) => {
     res.status(404).end("Page is not found");

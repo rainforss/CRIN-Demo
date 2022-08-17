@@ -25,8 +25,8 @@ const handler = nc<NextApiRequest, NextApiResponse>({
       throw new Error("Bad Request");
     }
     options.forEach((o: any) =>
-      config.membertypes.push({
-        value: o.bsi_themeid,
+      config.sectors.push({
+        value: o.bsi_organizationsectorid,
         label: o.bsi_name,
       })
     );
@@ -40,9 +40,7 @@ const handler = nc<NextApiRequest, NextApiResponse>({
     if (!req.query.id) {
       throw new Error("Bad Request");
     }
-    config.membertypes = config.membertypes.filter(
-      (s) => s.value !== req.query.id
-    );
+    config.sectors = config.sectors.filter((s) => s.value !== req.query.id);
     fs.writeFileSync(path, JSON.stringify(config));
     return res.status(200).json({ success: true });
   });

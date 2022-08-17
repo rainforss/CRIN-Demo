@@ -20,9 +20,12 @@ export interface Contact extends Entity {
 
 export interface Member extends Entity {
   contactid: string;
+  firstname: string;
+  lastname: string;
   fullname: string;
   emailaddress1: string;
   customertypecode: number;
+  donotbulkemail: boolean;
   "customertypecode@OData.Community.Display.V1.FormattedValue": string;
   bsi_organization: string;
   jobtitle: string;
@@ -30,17 +33,32 @@ export interface Member extends Entity {
   "bsi_membertype@OData.Community.Display.V1.FormattedValue": string;
   bsi_MemberCompany: {
     bsi_name: string;
+    bsi_organizationsize: number;
+    "bsi_organizationsize@OData.Community.Display.V1.FormattedValue": string;
     bsi_membercompanyid: string;
   };
+  address1_line1: string;
+  address1_postalcode: string;
+  address1_stateorprovince: string;
   address1_city: string;
   address1_country: string;
   bsi_dateregistered: Date;
   telephone1: string;
   bsi_MemberAssociatedSector_Member_Contact: Array<{
     bsi_name: string;
-    "bsi_organizationsize@OData.Community.Display.V1.FormattedValue": string;
+    bsi_memberassociatedsectorid: string;
+    _bsi_sector_value: string;
   }>;
   bsi_bsi_memberassociatedtheme_Member_contact: Array<{ bsi_name: string }>;
+  bsi_contact_bsi_memberassociatedfocusarea_Member: Array<{
+    bsi_name: string;
+    bsi_memberassociatedfocusareaid: string;
+  }>;
+  websiteurl: string;
+  bsi_linkedinprofile: string;
+  bsi_twitterprofile: string;
+  bsi_facebookprofile: string;
+  bsi_othersocialmediaprofile: string;
 }
 
 export type DynamicsMemberType = {
@@ -55,6 +73,11 @@ export type DynamicsMemberType = {
 export type DynamicsTheme = {
   bsi_name: string;
   bsi_themeid: string;
+};
+
+export type DynamicsSector = {
+  bsi_name: string;
+  bsi_organizationsectorid: string;
 };
 
 export type DynamicsBlog = {
