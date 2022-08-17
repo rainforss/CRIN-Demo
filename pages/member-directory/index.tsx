@@ -16,10 +16,9 @@ import MemberSearchForm, {
   MemberSearchValue,
 } from "../../forms/MemberSearchForm";
 import { useMembers } from "../../hooks/useMembers";
-import { useMemberTypes } from "../../hooks/useMemberTypes";
-import { useTechThemes } from "../../hooks/useTechThemes";
 import { getWebPageByWebsiteIdAndPageName } from "../../services/contentful";
 import { withSessionSsr } from "../../utils/authentication/withSession";
+import config from "../../crin-config.json";
 
 interface IMemberDirectoryProps {
   headerNav: INavigation;
@@ -38,24 +37,10 @@ const MemberDirectory: React.FunctionComponent<IMemberDirectoryProps> = ({
   });
 
   const { members, isMemberLoading, isMemberError } = useMembers(searchTerm);
-  const { techThemes, isTechThemeLoading } = useTechThemes();
-  const { memberTypes, isMemberTypeLoading } = useMemberTypes();
-
-  // if (isMemberError || isTechThemeError || isMemberTypeError) {
-  //   toast({
-  //     status: "error",
-  //     description:
-  //       isMemberError ?? "" + isTechThemeError ?? "" + isMemberTypeError ?? "",
-  //     duration: 3000,
-  //     isClosable: true,
-  //   });
-  // }
 
   const search = React.useCallback((searchTerm: MemberSearchValue) => {
     setSearchTerm(() => ({ ...searchTerm }));
   }, []);
-
-  console.log(isMemberError);
 
   return (
     <>
@@ -78,32 +63,17 @@ const MemberDirectory: React.FunctionComponent<IMemberDirectoryProps> = ({
         py={16}
       >
         <Box w={{ base: "100%", md: "30%" }}>
-          {isMemberTypeLoading || isTechThemeLoading ? (
-            <Center w="100%" minH="40vh" flexDir="column">
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-              />
-              <Box as="span" mt="2rem">
-                Loading Filters......
-              </Box>
-            </Center>
-          ) : (
-            <MemberSearchForm
-              techThemeOptions={techThemes.map((t) => ({
-                value: t.bsi_themeid,
-                label: t.bsi_name,
-              }))}
-              memberTypeOptions={memberTypes.map((m) => ({
-                value: m.Value.toString(),
-                label: m.Label.UserLocalizedLabel.Label,
-              }))}
-              search={search}
-            />
-          )}
+          <MemberSearchForm
+            techThemeOptions={config.themetypes.map((t) => ({
+              value: t.value,
+              label: t.label,
+            }))}
+            memberTypeOptions={config.membertypes.map((m) => ({
+              value: m.value,
+              label: m.label,
+            }))}
+            search={search}
+          />
         </Box>
         <Box
           display="flex"
@@ -160,12 +130,6 @@ export const getServerSideProps = withSessionSsr(
       };
     }
 
-    // const cca = await instantiateCca();
-    // const tokenResponse = await getClientCredentialsToken(cca);
-    // const accessToken = tokenResponse?.accessToken;
-    // const members = await dynamicsContact(
-    //   accessToken!
-    // ).getMemberProfilesForIntermediateAccessMember();
     const { headerNav, footerNav, siteName } =
       await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
     return {

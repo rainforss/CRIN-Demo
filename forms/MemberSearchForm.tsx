@@ -21,7 +21,6 @@ const MemberSearchForm: React.FunctionComponent<IMemberSearchFormProps> = ({
   memberTypeOptions,
   techThemeOptions,
 }) => {
-  console.log("rendered");
   return (
     <Formik
       initialValues={{

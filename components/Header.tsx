@@ -22,10 +22,11 @@ interface IHeaderProps {
 }
 
 const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
-  const { user, isLoading } = useCurrentUser();
+  const { user, isLoading, mutateUser } = useCurrentUser();
   const router = useRouter();
   const logout = async () => {
     await axios.get("/api/user/logout");
+    await mutateUser();
     router.push("/");
   };
   return (

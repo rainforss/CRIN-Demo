@@ -69,7 +69,7 @@ export const dynamicsContact = (accessToken: string) => {
     ) => {
       const filters = [];
       if (searchstring) {
-        filters.push(`startswith(fullname,'${searchstring}')`);
+        filters.push(`contains(fullname,'${searchstring}')`);
       }
       if (membertype) {
         filters.push(`bsi_membertype eq ${membertype}`);
