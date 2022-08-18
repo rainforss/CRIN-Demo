@@ -5,10 +5,7 @@ import {
   IPageSection,
   IPageSectionFields,
 } from "../../../@types/generated/contentful";
-import {
-  DESIGNED_SECTION_NAMES,
-  sectionConfig,
-} from "../../../sections/sectionConfig";
+import { sectionConfig } from "../../../sections/sectionConfig";
 import * as contentful from "../../../services/contentful";
 
 interface IPageSectionPreviewPageProps {
@@ -34,18 +31,18 @@ const PageSectionPreviewPage: React.FunctionComponent<
 
 export default PageSectionPreviewPage;
 
-export const getStaticPaths = () => {
-  const paths: any[] = [];
-  DESIGNED_SECTION_NAMES.forEach((p) =>
-    paths.push({ params: { designedSectionId: p } })
-  );
-  return {
-    paths,
-    fallback: false,
-  };
-};
+// export const getStaticPaths = () => {
+//   const paths: any[] = [];
+//   DESIGNED_SECTION_NAMES.forEach((p) =>
+//     paths.push({ params: { designedSectionId: p } })
+//   );
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// };
 
-export const getStaticProps = async ({
+export const getServerSideProps = async ({
   params,
   preview,
   previewData,

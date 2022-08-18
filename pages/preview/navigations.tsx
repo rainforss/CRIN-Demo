@@ -61,7 +61,7 @@ const NavigationPreviewPage: React.FunctionComponent<
 
 export default NavigationPreviewPage;
 
-export const getStaticProps = async ({
+export const getServerSideProps = async ({
   preview,
   previewData,
 }: GetServerSidePropsContext) => {
@@ -71,7 +71,6 @@ export const getStaticProps = async ({
     client,
     navigationId
   );
-  console.log(navigation);
   return {
     props: {
       navigation,
