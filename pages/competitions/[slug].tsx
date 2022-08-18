@@ -15,6 +15,7 @@ import {
   getPublicationByTypeAndSlug,
   getPublicationsByType,
   getWebPageByWebsiteIdAndPageName,
+  client,
 } from "../../services/contentful";
 import { richTextParserOption } from "../../utils/contentful/richTextParser";
 
@@ -99,7 +100,7 @@ export default CompetitionSlug;
 
 export const getStaticPaths = async () => {
   const paths: any[] = [];
-  const { publications } = await getPublicationsByType("Competitions");
+  const { publications } = await getPublicationsByType(client, "Competitions");
   publications.forEach((p) => paths.push({ params: { slug: p.fields.slug } }));
   return {
     paths,
@@ -110,11 +111,16 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }: GetServerSidePropsContext) => {
   const { slug } = params as IParams;
   const { publication } = await getPublicationByTypeAndSlug(
+    client,
     "Competitions",
     slug
   );
   const { webPage, headerNav, footerNav, siteName } =
-    await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
+    await getWebPageByWebsiteIdAndPageName(
+      client,
+      "5YqwWdGqUSG7Kpd2eLYgsX",
+      "home"
+    );
   return {
     props: {
       publication,

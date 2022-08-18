@@ -1,16 +1,12 @@
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
-import {
-  INavigation,
-  IPublications,
-  IWebPage,
-} from "../@types/generated/contentful";
+import { INavigation, IWebPage } from "../@types/generated/contentful";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { sectionConfig } from "../sections/sectionConfig";
 import {
-  getPublicationsByType,
   getWebPageByWebsiteIdAndPageName,
+  client,
 } from "../services/contentful";
 
 interface IHomeProps {
@@ -18,7 +14,6 @@ interface IHomeProps {
   headerNav: INavigation;
   footerNav: INavigation;
   siteName: string;
-  publications: IPublications[];
 }
 
 const Home: NextPage<IHomeProps> = (props) => {
@@ -65,15 +60,17 @@ export default Home;
 
 export const getStaticProps = async () => {
   const { webPage, headerNav, footerNav, siteName } =
-    await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
-  const { publications } = await getPublicationsByType("Competitions");
+    await getWebPageByWebsiteIdAndPageName(
+      client,
+      "5YqwWdGqUSG7Kpd2eLYgsX",
+      "home"
+    );
   return {
     props: {
       siteName,
       webPage,
       headerNav,
       footerNav,
-      publications,
     },
   };
 };

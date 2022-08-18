@@ -14,7 +14,10 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import MemberProfile from "../../components/MemberProfile";
 import { useMember } from "../../hooks/useMember";
-import { getWebPageByWebsiteIdAndPageName } from "../../services/contentful";
+import {
+  getWebPageByWebsiteIdAndPageName,
+  client,
+} from "../../services/contentful";
 import { withSessionSsr } from "../../utils/authentication/withSession";
 
 interface IIndividualMemberPageProps {
@@ -110,7 +113,11 @@ export const getServerSideProps = withSessionSsr(
       };
     }
     const { headerNav, footerNav, siteName } =
-      await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
+      await getWebPageByWebsiteIdAndPageName(
+        client,
+        "5YqwWdGqUSG7Kpd2eLYgsX",
+        "home"
+      );
     return {
       props: { headerNav, footerNav, siteName, user, id },
     };

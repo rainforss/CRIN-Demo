@@ -5,7 +5,10 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import MemberProfileEdit from "../../components/MemberProfileEdit";
 import { useMember } from "../../hooks/useMember";
-import { getWebPageByWebsiteIdAndPageName } from "../../services/contentful";
+import {
+  getWebPageByWebsiteIdAndPageName,
+  client,
+} from "../../services/contentful";
 import { CurrentUser } from "../../types/authentication";
 import { withSessionSsr } from "../../utils/authentication/withSession";
 
@@ -83,7 +86,11 @@ export const getServerSideProps = withSessionSsr(
     }
 
     const { headerNav, footerNav, siteName } =
-      await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
+      await getWebPageByWebsiteIdAndPageName(
+        client,
+        "5YqwWdGqUSG7Kpd2eLYgsX",
+        "home"
+      );
     return {
       props: { headerNav, footerNav, siteName, user },
     };

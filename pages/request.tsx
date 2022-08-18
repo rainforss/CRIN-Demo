@@ -9,7 +9,10 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TextAreaInput from "../components/TextAreaInput";
 import TextInput from "../components/TextInput";
-import { getWebPageByWebsiteIdAndPageName } from "../services/contentful";
+import {
+  getWebPageByWebsiteIdAndPageName,
+  client,
+} from "../services/contentful";
 import { withSessionSsr } from "../utils/authentication/withSession";
 import { requestSchema } from "../utils/formik-forms/validation";
 
@@ -189,7 +192,11 @@ export const getServerSideProps = withSessionSsr(
     }
 
     const { headerNav, footerNav, siteName } =
-      await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
+      await getWebPageByWebsiteIdAndPageName(
+        client,
+        "5YqwWdGqUSG7Kpd2eLYgsX",
+        "home"
+      );
     return {
       props: { headerNav, footerNav, siteName },
     };

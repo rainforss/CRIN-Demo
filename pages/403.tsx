@@ -9,7 +9,10 @@ import * as React from "react";
 import { INavigation } from "../@types/generated/contentful";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { getWebPageByWebsiteIdAndPageName } from "../services/contentful";
+import {
+  getWebPageByWebsiteIdAndPageName,
+  client,
+} from "../services/contentful";
 
 interface INotAuthorizedProps {
   headerNav: INavigation;
@@ -52,7 +55,11 @@ export default NotAuthorized;
 
 export const getStaticProps = async () => {
   const { webPage, headerNav, footerNav, siteName } =
-    await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
+    await getWebPageByWebsiteIdAndPageName(
+      client,
+      "5YqwWdGqUSG7Kpd2eLYgsX",
+      "home"
+    );
   return {
     props: {
       siteName,

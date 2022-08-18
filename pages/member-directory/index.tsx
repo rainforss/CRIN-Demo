@@ -16,7 +16,10 @@ import MemberSearchForm, {
   MemberSearchValue,
 } from "../../forms/MemberSearchForm";
 import { useMembers } from "../../hooks/useMembers";
-import { getWebPageByWebsiteIdAndPageName } from "../../services/contentful";
+import {
+  getWebPageByWebsiteIdAndPageName,
+  client,
+} from "../../services/contentful";
 import { withSessionSsr } from "../../utils/authentication/withSession";
 import config from "../../crin-config.json";
 
@@ -131,7 +134,11 @@ export const getServerSideProps = withSessionSsr(
     }
 
     const { headerNav, footerNav, siteName } =
-      await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
+      await getWebPageByWebsiteIdAndPageName(
+        client,
+        "5YqwWdGqUSG7Kpd2eLYgsX",
+        "home"
+      );
     return {
       props: { headerNav, footerNav, siteName, user },
     };

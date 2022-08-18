@@ -1,14 +1,53 @@
 import {
   INavigation,
-  IPublications,
+  INavigationFields,
+  IPageSectionFields,
+  IPublicationsFields,
   IWebPage,
-  IWebsite,
+  IWebPageFields,
+  IWebsiteFields,
 } from "../@types/generated/contentful";
 
-const client = require("contentful").createClient({
-  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
-  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN,
+import * as contentful from "contentful";
+import { Entry } from "contentful";
+
+export const client = contentful.createClient({
+  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
+  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!,
 });
+
+export const previewClient = contentful.createClient({
+  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
+  accessToken: process.env.CONTENTFUL_PREVIEW_API_ACCESS_TOKEN!,
+  host: "preview.contentful.com",
+});
+
+export const getAllPageSections = async (
+  client: contentful.ContentfulClientApi
+) => {
+  const pageSections = await client.getEntries<IPageSectionFields>({
+    content_type: "pageSection",
+  });
+  return { pageSections };
+};
+
+export const getPageSectionById = async (
+  client: contentful.ContentfulClientApi,
+  pageSectionId: string
+) => {
+  const pageSection = await client.getEntry<IPageSectionFields>(pageSectionId);
+  return { pageSection };
+};
+
+export const getNavigationById = async (
+  client: contentful.ContentfulClientApi,
+  navigationId: string
+) => {
+  const navigation = await client.getEntry<INavigationFields>(navigationId, {
+    include: 3,
+  });
+  return { navigation };
+};
 
 export const getHomePageImageSections = async () => {
   const homePageEntry = await client.getEntry("sdgsdg");
@@ -16,6 +55,7 @@ export const getHomePageImageSections = async () => {
 };
 
 export const getHeaderAndFooterNavigationOfWebsite = async (
+  client: contentful.ContentfulClientApi,
   websiteId: string
 ) => {
   const headerNav = await client.getEntries({
@@ -35,8 +75,11 @@ export const getHeaderAndFooterNavigationOfWebsite = async (
   return { headerNav, footerNav, headerLogo, footerLogo };
 };
 
-export const getPageSectionsOfWebPage = async (webPageName: string) => {
-  const webPage = await client.getEntries({
+export const getPageSectionsOfWebPage = async (
+  client: contentful.ContentfulClientApi,
+  webPageName: string
+) => {
+  const webPage = await client.getEntries<IWebPageFields>({
     content_type: "webPage",
     "fields.pageName": webPageName,
     include: 2,
@@ -47,11 +90,12 @@ export const getPageSectionsOfWebPage = async (webPageName: string) => {
 };
 
 export const getPublicationByTypeAndSlug = async (
+  client: contentful.ContentfulClientApi,
   type: string,
   slug: string
 ) => {
-  const publication: IPublications = (
-    await client.getEntries({
+  const publication: Entry<IPublicationsFields> = (
+    await client.getEntries<IPublicationsFields>({
       content_type: "publications",
       "fields.type": type,
       "fields.slug": slug,
@@ -61,9 +105,12 @@ export const getPublicationByTypeAndSlug = async (
   return { publication };
 };
 
-export const getPublicationsByType = async (type: string) => {
-  const publications: IPublications[] = (
-    await client.getEntries({
+export const getPublicationsByType = async (
+  client: contentful.ContentfulClientApi,
+  type: string
+) => {
+  const publications: Entry<IPublicationsFields>[] = (
+    await client.getEntries<IPublicationsFields>({
       content_type: "publications",
       "fields.type": type,
       include: 2,
@@ -72,9 +119,11 @@ export const getPublicationsByType = async (type: string) => {
   return { publications };
 };
 
-export const getAllStaticWebPages = async () => {
-  const webPages: IWebPage[] = (
-    await client.getEntries({
+export const getAllStaticWebPages = async (
+  client: contentful.ContentfulClientApi
+) => {
+  const webPages: Entry<IWebPageFields>[] = (
+    await client.getEntries<IWebPageFields>({
       content_type: "webPage",
       "fields.pageType": "Static Page",
       include: 3,
@@ -86,16 +135,18 @@ export const getAllStaticWebPages = async () => {
 };
 
 export const getWebPageByWebsiteIdAndPageName = async (
+  client: contentful.ContentfulClientApi,
   websiteId: string,
   pageName: string
 ) => {
-  const website: IWebsite = (
-    await client.getEntries({
+  const website = (
+    await client.getEntries<IWebsiteFields>({
       content_type: "website",
       "sys.id": websiteId,
       include: 3,
     })
   ).items[0];
+
   const webPage: IWebPage | undefined = pageName
     ? website!.fields!.webPages!.find((wp: any) =>
         wp.fields.slug.includes(pageName)

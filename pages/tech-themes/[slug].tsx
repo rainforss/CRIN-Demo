@@ -16,6 +16,7 @@ import { useCurrentUser } from "../../hooks/useCurrentUser";
 import {
   getPublicationByTypeAndSlug,
   getWebPageByWebsiteIdAndPageName,
+  client,
 } from "../../services/contentful";
 import { richTextParserOption } from "../../utils/contentful/richTextParser";
 
@@ -374,11 +375,16 @@ export const getServerSideProps = async ({
 }: GetServerSidePropsContext) => {
   const { slug } = params as IParams;
   const { publication } = await getPublicationByTypeAndSlug(
+    client,
     "Tech Themes",
     slug
   );
   const { webPage, headerNav, footerNav, siteName } =
-    await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", "home");
+    await getWebPageByWebsiteIdAndPageName(
+      client,
+      "5YqwWdGqUSG7Kpd2eLYgsX",
+      "home"
+    );
   return {
     props: {
       publication,

@@ -29,6 +29,7 @@ const Header: React.FunctionComponent<IHeaderProps> = ({ headerNav }) => {
     await mutateUser();
     router.push("/");
   };
+
   return (
     <Box as="header">
       <Box

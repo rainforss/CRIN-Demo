@@ -8,6 +8,8 @@ import { sectionConfig } from "../sections/sectionConfig";
 import {
   getAllStaticWebPages,
   getWebPageByWebsiteIdAndPageName,
+  client,
+  previewClient,
 } from "../services/contentful";
 
 interface IPageProps {
@@ -65,7 +67,7 @@ export default Page;
 
 export const getStaticPaths = async () => {
   const paths: any[] = [];
-  const { webPages } = await getAllStaticWebPages();
+  const { webPages } = await getAllStaticWebPages(client);
   webPages.forEach((p) => paths.push({ params: { pageName: p.fields.slug } }));
   return {
     paths,
@@ -73,10 +75,17 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+export const getStaticProps = async ({
+  params,
+  preview,
+}: GetStaticPropsContext) => {
   const { pageName } = params as IParams;
   const { webPage, headerNav, footerNav, siteName } =
-    await getWebPageByWebsiteIdAndPageName("5YqwWdGqUSG7Kpd2eLYgsX", pageName);
+    await getWebPageByWebsiteIdAndPageName(
+      preview ? previewClient : client,
+      "5YqwWdGqUSG7Kpd2eLYgsX",
+      pageName
+    );
   return {
     props: {
       siteName,
